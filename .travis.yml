@@ -1,7 +1,7 @@
 ---
 env:
   matrix:
-    - GDAL_VERSION=1.9.2
+    - GDAL_VERSION=1.10.0
 before_install:
   - rm .travis.yml
   - sudo apt-get update
@@ -10,9 +10,9 @@ before_install:
   - git config --global user.email $HOSTNAME":not-for-mail@travis-ci.org"
 language: c
 script:
-  - export LSB_INFO=$( lsb_release -rs )_$( lsb_release -ms )
+  - export LSB_RELEASE=$( lsb_release -rs )
   - wget -q http://download.osgeo.org/gdal/gdal-$GDAL_VERSION.tar.gz
   - tar xvzf gdal-$GDAL_VERSION.tar.gz
   - ( cd gdal-$GDAL_VERSION && ./configure --prefix=/home/travis/gdal-$GDAL_VERSION && make && make install )
-  - tar cvzf gdal-$GDAL_VERSION.travis.$LSB_INFO.tar.gz /home/travis/gdal-$GDAL_VERSION
-  - sendfile gdal-$GDAL_VERSION.travis.$LSB_INFO.tar.gz getty@stardestroyer.de
+  - tar cvzf gdal-$GDAL_VERSION.travis.$LSB_RELEASE.tar.gz /home/travis/gdal-$GDAL_VERSION
+  - sendfile gdal-$GDAL_VERSION.travis.$LSB_RELEASE.tar.gz getty@stardestroyer.de
